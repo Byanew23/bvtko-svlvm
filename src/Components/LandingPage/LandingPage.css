@@ -1,6 +1,6 @@
 .wrapper {
     width: 100vw;
-    height: calc(100vh+6rem);
+    height: 100%;
     background-color: #595858;
     display: flex;
     align-items: center;
