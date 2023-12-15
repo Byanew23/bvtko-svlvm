@@ -1,20 +1,13 @@
 import React from 'react'
 import './ProductCard.css'
+import { glassesDataType } from '../../mockData'
 
-interface ProductCardType {
-    id: string
-    url: string
-    alt: string
-    isBig?: boolean
-    price: string
-}
-
-export const ProductCard = ({ data }: { data: ProductCardType }) => {
-    const { url, alt, price, id } = data
+export const ProductCard = ({ data }: { data: glassesDataType }) => {
+    const { urls, name, price } = data
     return <div className={`image-wrapper`}>
-        <img className="card-image" src={url} alt={alt} />
+        <img className="card-image" src={urls[0]} alt={name} />
         <div className="overlay">
-            <span>Name: {alt}</span>
+            <span>Name: {name}</span>
             <span>Price: {price}</span>
         </div>
     </div>
