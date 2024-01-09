@@ -43,7 +43,7 @@ export const uploadItem = async (values: Omit<glassesDataType, 'id'>) => {
     const { data, error } = await supabase
         .from('items')
         .insert([
-            { 'urls': urls, 'name': name, 'description': description, 'price': price },
+            { 'urls': urls, 'name': name, 'description': description, 'price': price, 'ordered': false },
         ])
         .select()
 
@@ -63,6 +63,16 @@ export const deleteItemById = async (id: string) => {
         .eq('id', id)
 
 }
+
+export const setItemOrderStatus = async (id: string, status: boolean) => {
+    const { data, error } = await supabase
+        .from('items')
+        .update({ 'ordered': status })
+        .eq('id', id)
+        .select()
+
+}
+
 
 // export const useSupabaseData = () => {
 

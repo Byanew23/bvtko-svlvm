@@ -40,10 +40,17 @@
     margin: 1rem
 }
 
+.single-item {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed black;
+}
+
 .delete-item {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    padding-top: 0.5rem;
 }
 
 .delete-pic {

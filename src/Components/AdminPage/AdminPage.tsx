@@ -7,7 +7,7 @@ import { Auth } from './Auth';
 import { DeletePage } from './DeletePage';
 import './AdminPage.css'
 
-export type Options = "UPLOAD" | "DELETE" | "AUTH";
+export type Options = "UPLOAD" | "MANAGE" | "AUTH";
 
 export const AdminPage = () => {
     const [state, setState] = React.useState<Options>("AUTH")
@@ -28,12 +28,12 @@ export const AdminPage = () => {
 
     return (
         <>
-            {state !== "AUTH" && <Tabs options={["UPLOAD", "DELETE"]} changeTab={setState} />}
+            {state !== "AUTH" && <Tabs options={["UPLOAD", "MANAGE"]} changeTab={setState} />}
             {state === "UPLOAD" ? <div>
                 <h1>Add Product</h1>
                 <AddProductForm onSubmit={handleSubmit} />
             </div>
-                : state === "DELETE" ? <DeletePage /> : <Auth changeTab={() => setState("UPLOAD")} />}
+                : state === "MANAGE" ? <DeletePage /> : <Auth changeTab={() => setState("UPLOAD")} />}
         </>
 
 

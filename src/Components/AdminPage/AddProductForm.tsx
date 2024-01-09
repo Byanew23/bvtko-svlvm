@@ -5,7 +5,7 @@ import { glassesDataType } from '../../mockData';
 export const AddProductForm = ({ onSubmit }: { onSubmit: (values: Omit<glassesDataType, 'id'>) => void }) => {
     return (
         <Formik
-            initialValues={{ name: '', price: 0, description: '', urls: [] }}
+            initialValues={{ name: '', price: 0, description: '', urls: [], ordered: false }}
             onSubmit={(values) => onSubmit(values)}
         >
             {({ setFieldValue }) => (

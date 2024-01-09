@@ -1,0 +1,21 @@
+.form-wrapper {
+    background: white;
+    padding: 2rem 4rem;
+}
+
+.form-styler {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.small-label {
+    font-size: 0.7rem
+}
+
+.submit-button {
+    padding: 1rem 0;
+    background: black;
+    color: white;
+    font-size: 1.3rem;
+}
