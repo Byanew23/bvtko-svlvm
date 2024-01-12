@@ -19,12 +19,15 @@ export const ProductPage = () => {
 
     return item ? <div className="product-wrapper">
         <img className="product-image" src={item.urls[0]} alt={item.name} />
-        <div className="details">
-            <h2 className="name">{item.name}</h2>
-            <p className="price">{item.price}</p>
-            Add other product details and styling
-        </div>
-        <button className="order-now" onClick={() => setOpenModal(true)}>Order Now</button>
+        <span>
+
+            <div className="details">
+                <h2 className="name">{item.name}</h2>
+                <p className="price">{item.price}</p>
+                <p>{item?.description}</p>
+            </div>
+            <button className={`order-now${item.ordered ? "-sold" : ""}`} onClick={() => setOpenModal(true)}>{item.ordered ? "Sold Out" : "Order Now"}</button>
+        </span>
         {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} />} />}
     </div> : <div style={{ width: '100vw', height: '100vh', background: "#595858" }}></div>
 }

@@ -1,13 +1,25 @@
 .product-wrapper {
     background: #595858;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     overflow: hidden
 }
 
 .product-image {
     width: 70%;
     margin: 1rem;
+}
+
+@media only screen and (min-width: 900px) {
+    .product-wrapper {
+        display: flex
+    }
+
+    .product-image {
+        width: 30rem;
+        height: 30rem;
+        margin: 1rem;
+    }
 }
 
 .details {
@@ -23,5 +35,17 @@
     padding: 1rem 1.5rem;
     background: #000;
     color: white;
-    font-size: 1.3rem
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.order-now-sold {
+    margin: 0 2rem;
+    padding: 1rem 1.5rem;
+    background: #6d6d6d;
+    color: white;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    pointer-events: none;
 }
