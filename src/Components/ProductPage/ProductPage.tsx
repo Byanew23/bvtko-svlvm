@@ -52,5 +52,5 @@ export const ProductPage = () => {
             <button className={`order-now${item.ordered ? "-sold" : ""}`} onClick={() => setOpenModal(true)}>{item.ordered ? "Sold Out" : "Order Now"}</button>
         </span>
         {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} />} />}
-    </div> : <div style={{ width: '100vw', height: '100vh', background: "#595858" }}></div>
+    </div> : <div style={{ width: '100vw', height: '100vh' }}></div>
 }

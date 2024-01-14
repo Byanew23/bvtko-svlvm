@@ -6,16 +6,25 @@
   font-style: normal;
 }
 
+html {
+  background-color: #595858;
+  background-image: url('https://i.ibb.co/FxpB6pn/background.png');
+  background-size: 30%;
+  color: white;
+}
+
 body {
   overflow-x: hidden;
-  background-color: #595858;
+
 }
 
 .title {
   font-family: 'DrippyFont';
   font-size: 5rem;
   padding-top: 1rem;
-  background-color: #595858;
+  /* background-color: #595858; */
+  -webkit-text-stroke: 2px black;
+
   width: 100vw;
   margin: auto;
   display: flex;
