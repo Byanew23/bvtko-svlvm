@@ -24,7 +24,6 @@ export const EmailForm = ({ handleClose }: { handleClose: () => void }) => {
     }
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        // console.log('HIII', name, email, address, telNum, message)
 
         emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID as string, 'template_prfqaua', form.current, process.env.REACT_APP_EMAILJS_PUBLIC_KEY)
             .then((result) => {

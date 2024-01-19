@@ -9,15 +9,19 @@ import { EmailForm } from './EmailForm';
 export const ProductPage = () => {
     const { productId } = useParams();
     const [item, setItem] = React.useState<glassesDataType | undefined>(undefined)
-    window.scrollTo(0, 0)
+
     const [openModal, setOpenModal] = React.useState<boolean>(false)
     const [currentPic, setCurrentPic] = React.useState<number>(0)
     const [direction, setDirection] = React.useState<boolean>(true);
 
-    // Fetch product details based on productId or use static data
     if (!item) getItemById(productId || '').then(data => setItem(data))
 
     React.useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
+    React.useEffect(() => {
+
         if (item?.urls.length && item.urls.length > 1) {
             const intervalId = setInterval(() => {
 
@@ -32,8 +36,7 @@ export const ProductPage = () => {
 
                     return newIndex;
                 });
-            }, 100);
-            // Cleanup function to clear the interval when the component is unmounted
+            }, 180);
 
             return () => clearInterval(intervalId);
         }

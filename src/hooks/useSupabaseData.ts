@@ -73,6 +73,17 @@ export const setItemOrderStatus = async (id: string, status: boolean) => {
 
 }
 
+export const editItem = async (id: string, values: Omit<glassesDataType, 'id'>) => {
+    const { name, price, description, urls } = values
+    const { data, error } = await supabase
+        .from('items')
+        .update({ name: name, price: price, description: description, urls: urls })
+        .eq('id', id)
+        .select()
+
+}
+
+
 
 // export const useSupabaseData = () => {
 

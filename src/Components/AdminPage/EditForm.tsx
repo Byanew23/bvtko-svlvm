@@ -1,18 +1,20 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { glassesDataType } from '../../mockData';
+import { editItem } from '../../hooks/useSupabaseData';
 
-export const AddProductForm = ({ onSubmit }: { onSubmit: (values: Omit<glassesDataType, 'id'>) => void }) => {
+export const EditForm = ({ handleClose, item }: { handleClose: () => void, item: glassesDataType }) => {
     return (
         <Formik
-            initialValues={{ name: '', price: 0, description: '', urls: [], ordered: false }}
-            onSubmit={(values, { resetForm }) => {
-                onSubmit(values)
-                resetForm()
+
+            initialValues={{ name: item.name, price: item.price, description: item.description, urls: item.urls, ordered: item.ordered }}
+            onSubmit={(values) => {
+                editItem(item.id, values)
+                handleClose()
             }}
         >
             {({ setFieldValue }) => (
-                <Form>
+                <Form className="edit-form">
                     <div className="form-field">
                         <label htmlFor="name">Name:</label>
                         <Field type="text" id="name" name="name" />
