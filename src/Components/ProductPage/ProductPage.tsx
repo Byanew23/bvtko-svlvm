@@ -14,7 +14,14 @@ export const ProductPage = () => {
     const [currentPic, setCurrentPic] = React.useState<number>(0)
     const [direction, setDirection] = React.useState<boolean>(true);
 
-    if (!item) getItemById(productId || '').then(data => setItem(data))
+    if (!window.localStorage[productId as string] || !item) getItemById(productId || '').then(data => {
+        if (!window.localStorage[data?.id as string]) {
+            window.localStorage[data?.id as string] = JSON.stringify(data)
+        } else if (window.localStorage[data?.id as string] !== JSON.stringify(data)) {
+            window.localStorage[data?.id as string] = JSON.stringify(data)
+        }
+        setItem(data)
+    })
 
     React.useEffect(() => {
         window.scrollTo(0, 0)
@@ -42,9 +49,11 @@ export const ProductPage = () => {
         }
     }, [currentPic, direction, item])
 
+    const images = JSON.parse(window.localStorage[item?.id ?? ''] ?? '{}').urls
+
 
     return item ? <div className="product-wrapper">
-        <img className="product-image" src={item.urls[currentPic]} alt={item.name} />
+        <img className="product-image" src={images[currentPic]} alt={item.name} />
         <span>
 
             <div className="details">

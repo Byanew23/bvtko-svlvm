@@ -7,9 +7,5 @@ export const ProductCard = ({ data }: { data: glassesDataType }) => {
     return <div className={`image-wrapper`}>
         <div className={`sold-overlay${ordered ? "-true" : ""}`} />
         <img className="card-image" src={urls[0]} alt={name} />
-        <div className="overlay">
-            <span>Name: {name}</span>
-            <span>Price: {price}</span>
-        </div>
     </div>
 }
