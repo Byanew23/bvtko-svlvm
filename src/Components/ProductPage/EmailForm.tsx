@@ -25,6 +25,8 @@ export const EmailForm = ({ handleClose }: { handleClose: () => void }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
+        // console.log(form.current)
+
         emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID as string, 'template_prfqaua', form.current, process.env.REACT_APP_EMAILJS_PUBLIC_KEY)
             .then((result) => {
                 console.log(result.text);
@@ -36,7 +38,7 @@ export const EmailForm = ({ handleClose }: { handleClose: () => void }) => {
             });
 
     }
-    return <div className='form-wrapper'>{emailSent ? <div className="form-styler"><p>Thank you for your order! You should have received an email with your rder details</p><button className="submit-button" onClick={handleClose}>Close</button></div> : <form ref={form} id="contactForm" className="form-styler" onSubmit={(e) => handleSubmit(e)}>
+    return <div className='form-wrapper'>{emailSent ? <div className="form-styler"><p>Thank you for your order! You should have received an email with your order details</p><button className="submit-button" onClick={handleClose}>Close</button></div> : <form ref={form} id="contactForm" className="form-styler" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" name="to_name" required />
 
