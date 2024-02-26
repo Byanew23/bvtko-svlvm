@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { glassesDataType } from '../../mockData';
+import { glassesDataType, OmitMultiple } from '../../utils';
 
-export const AddProductForm = ({ onSubmit }: { onSubmit: (values: Omit<glassesDataType, 'id'>) => void }) => {
+
+
+export const AddProductForm = ({ onSubmit }: { onSubmit: (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => void }) => {
     return (
         <Formik
             initialValues={{ name: '', price: 0, description: '', urls: [], ordered: false }}

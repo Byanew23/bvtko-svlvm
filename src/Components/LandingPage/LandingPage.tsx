@@ -10,6 +10,14 @@ export const LandingPage = () => {
     if (!images) {
 
         getItems().then(d => setImages(d))
+    } else {
+        images.forEach(data => {
+            if (!window.localStorage[data?.id as string]) {
+                window.localStorage[data?.id as string] = JSON.stringify(data)
+            } else if (window.localStorage[data?.id as string] !== JSON.stringify(data)) {
+                window.localStorage[data?.id as string] = JSON.stringify(data)
+            }
+        })
     }
 
     return <div className="wrapper">

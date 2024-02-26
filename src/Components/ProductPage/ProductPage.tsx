@@ -1,27 +1,33 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import './ProductPage.css'
-import { getItemById } from '../../hooks/useSupabaseData';
-import { glassesDataType } from '../../mockData';
+import cacheImages from '../../hooks/cacheImages';
+import { changeItemWishlist } from '../../hooks/useSupabaseData';
+import { glassesDataType } from '../../utils';
 import { Modal } from '../Modal';
 import { EmailForm } from './EmailForm';
 
 export const ProductPage = () => {
     const { productId } = useParams();
     const [item, setItem] = React.useState<glassesDataType | undefined>(undefined)
+    const [isInWishlist, setIsInWishlist] = React.useState<boolean>(false)
 
     const [openModal, setOpenModal] = React.useState<boolean>(false)
     const [currentPic, setCurrentPic] = React.useState<number>(0)
     const [direction, setDirection] = React.useState<boolean>(true);
 
-    if (!window.localStorage[productId as string] || !item) getItemById(productId || '').then(data => {
-        if (!window.localStorage[data?.id as string]) {
-            window.localStorage[data?.id as string] = JSON.stringify(data)
-        } else if (window.localStorage[data?.id as string] !== JSON.stringify(data)) {
-            window.localStorage[data?.id as string] = JSON.stringify(data)
+    if (!item) {
+        setItem(JSON.parse(window.localStorage[productId ?? '']))
+    } else {
+        cacheImages(item.urls)
+    }
+
+    React.useEffect(() => {
+        if (item) {
+            const wishlist = window.localStorage.getItem('wishlist')?.split(',')
+            if (wishlist?.includes(item.id + '')) setIsInWishlist(true)
         }
-        setItem(data)
-    })
+    }, [])
 
     React.useEffect(() => {
         window.scrollTo(0, 0)
@@ -49,6 +55,40 @@ export const ProductPage = () => {
         }
     }, [currentPic, direction, item])
 
+    const handleAddToWishlist = (item: glassesDataType, add: boolean) => {
+
+        let wishlist = window.localStorage.getItem('wishlist')
+        let currItem = JSON.parse(window.localStorage.getItem(item.id) ?? '')
+        if (add) {
+            // Add the item id to wishlist
+            if (!wishlist) {
+                window.localStorage.setItem('wishlist', item.id)
+            } else {
+                wishlist = wishlist + ',' + item.id
+                window.localStorage.setItem('wishlist', wishlist)
+            }
+
+            if (currItem) {
+                currItem.in_wishlist = parseInt(currItem.in_wishlist) + 1
+                window.localStorage.setItem(item.id, JSON.stringify(currItem))
+            }
+        } else {
+            // Remove item id from wishlist
+            let wishlistItems = wishlist?.split(',')
+            wishlistItems = wishlistItems?.filter(x => x != item.id)
+
+            window.localStorage.setItem('wishlist', wishlistItems?.join(',') ?? '')
+
+            if (currItem) {
+                currItem.in_wishlist = parseInt(currItem.in_wishlist) - 1
+                window.localStorage.setItem(item.id, JSON.stringify(currItem))
+            }
+        }
+
+        changeItemWishlist(item.id, currItem.in_wishlist)
+        setIsInWishlist(add)
+    }
+
     const images = JSON.parse(window.localStorage[item?.id ?? ''] ?? '{}').urls
 
 
@@ -61,7 +101,10 @@ export const ProductPage = () => {
                 <p className="price">{item.price}</p>
                 <p>{item?.description}</p>
             </div>
-            <button className={`order-now${item.ordered ? "-sold" : ""}`} onClick={() => setOpenModal(true)}>{item.ordered ? "Sold Out" : "Order Now"}</button>
+            <span className='CTAs'>
+                <button className={`order-now${item.ordered ? "-sold" : ""}`} onClick={() => setOpenModal(true)}>{item.ordered ? "Sold Out" : "Order Now"}</button>
+                {item.ordered && <button className={`order-now ${isInWishlist && 'in-wishlist'}`} onClick={() => handleAddToWishlist(item, !isInWishlist)}>{isInWishlist ? "Remove From Wishlist" : "Add To Wishlist"}</button>}
+            </span>
         </span>
         {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} />} />}
     </div> : <div style={{ width: '100vw', height: '100vh' }}></div>

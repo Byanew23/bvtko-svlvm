@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createClient } from '@supabase/supabase-js';
-import { glassesDataType } from '../mockData';
+import { glassesDataType, OmitMultiple } from '../utils';
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || ''
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY || ''
@@ -37,7 +37,7 @@ export const getItemById = async (id: string) => {
 
 };
 
-export const uploadItem = async (values: Omit<glassesDataType, 'id'>) => {
+export const uploadItem = async (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => {
 
     const { urls, name, description, price } = values
     const { data, error } = await supabase
@@ -73,7 +73,7 @@ export const setItemOrderStatus = async (id: string, status: boolean) => {
 
 }
 
-export const editItem = async (id: string, values: Omit<glassesDataType, 'id'>) => {
+export const editItem = async (id: string, values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => {
     const { name, price, description, urls } = values
     const { data, error } = await supabase
         .from('items')
@@ -83,34 +83,11 @@ export const editItem = async (id: string, values: Omit<glassesDataType, 'id'>) 
 
 }
 
+export const changeItemWishlist = async (id: string, wishlistCount: number) => {
+    const { data, error } = await supabase
+        .from('items')
+        .update({ 'in_wishlist': wishlistCount })
+        .eq('id', id)
+        .select()
 
-
-// export const useSupabaseData = () => {
-
-//     const uploadItem = async (values: glassesDataType) => {
-
-//         const { id, urls, name, description, price } = values
-//         const { data, error } = await supabase
-//             .from('items')
-//             .insert([
-//                 { 'id': id, 'urls': urls, 'name': name, 'description': description, 'price': price },
-//             ])
-
-
-//         if (error) {
-//             console.error('Error fetching data:', error.message);
-
-//         }
-//     }
-
-//     const deleteItem = async (id: string) => {
-
-//         const { error } = await supabase
-//             .from('items')
-//             .delete()
-//             .eq('id', id)
-
-//     }
-
-//     return { getData: getImages, upload: uploadItem }
-// }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { getItems, deleteItemById, setItemOrderStatus } from '../../hooks/useSupabaseData';
-import { glassesDataType } from '../../mockData';
+import { glassesDataType } from '../../utils';
 import { Modal } from '../Modal';
 import { EditForm } from './EditForm';
 export const DeletePage = () => {

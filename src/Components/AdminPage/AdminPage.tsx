@@ -1,5 +1,5 @@
 import React from 'react'
-import { glassesDataType } from '../../mockData';
+import { glassesDataType, OmitMultiple } from '../../utils';
 import { AddProductForm } from './AddProductForm'
 import { uploadItem } from '../../hooks/useSupabaseData'
 import { Tabs } from './Tabs';
@@ -21,7 +21,7 @@ export const AdminPage = () => {
         }
     }, [])
 
-    const handleSubmit = (values: Omit<glassesDataType, 'id'>) => {
+    const handleSubmit = (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => {
         // Handle form submission here, e.g., send data to your backend
         uploadItem(values)
     };

@@ -1,6 +1,6 @@
 import React from 'react'
 import './ProductCard.css'
-import { glassesDataType } from '../../mockData'
+import { glassesDataType } from '../../utils'
 
 export const ProductCard = ({ data }: { data: glassesDataType }) => {
     const { urls, name, price, ordered } = data

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { glassesDataType } from '../../mockData';
+import { glassesDataType } from '../../utils';
 import { editItem } from '../../hooks/useSupabaseData';
 
 export const EditForm = ({ handleClose, item }: { handleClose: () => void, item: glassesDataType }) => {

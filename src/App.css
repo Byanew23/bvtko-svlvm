@@ -34,6 +34,22 @@ body {
 
 .title-text {
   position: fixed;
-  z-index: 1;
+  height: 6rem;
+  z-index: 5;
   cursor: pointer;
+  top: -5rem;
+}
+
+.logo-wrapper {
+  width: 100dvw;
+  height: fit-content;
+  z-index: 7;
+  background: linear-gradient(#595858 70%, transparent);
+  /* background-color: red; */
+}
+
+.header-logo {
+  height: 350px;
+  width: 80vw;
+  max-width: 500px
 }
