@@ -4,13 +4,14 @@ import { useParams } from 'react-router-dom'
 import { setItemOrderStatus } from '../../hooks/useSupabaseData'
 import './EmailForm.css'
 
-export const EmailForm = ({ handleClose }: { handleClose: () => void }) => {
+export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => void, refreshItem: () => void }) => {
     const [emailSent, setEmailSent] = React.useState<boolean>(false)
 
     const form = React.useRef<any>()
 
 
     const { productId } = useParams()
+    const item = JSON.parse(window.localStorage.getItem(productId ?? '') ?? '').name
     const markAsOrdered = () => {
         setItemOrderStatus(productId as string, true)
     }
@@ -25,20 +26,21 @@ export const EmailForm = ({ handleClose }: { handleClose: () => void }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        // console.log(form.current)
-
         emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID as string, 'template_prfqaua', form.current, process.env.REACT_APP_EMAILJS_PUBLIC_KEY)
             .then((result) => {
                 console.log(result.text);
                 sendConfirmationEmail()
                 setEmailSent(true)
                 markAsOrdered()
+                refreshItem()
             }, (error) => {
                 console.log(error.text);
             });
 
     }
     return <div className='form-wrapper'>{emailSent ? <div className="form-styler"><p>Thank you for your order! You should have received an email with your order details</p><button className="submit-button" onClick={handleClose}>Close</button></div> : <form ref={form} id="contactForm" className="form-styler" onSubmit={(e) => handleSubmit(e)}>
+        <input type="text" id="name" name="glasses" className='hidden' defaultValue={item} />
+
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" name="to_name" required />
 
@@ -58,9 +60,3 @@ export const EmailForm = ({ handleClose }: { handleClose: () => void }) => {
         <button type="submit" className="submit-button">Submit</button>
     </form>}</div >
 }
-
-// onChange={(e) => setName(e.target.value)}
-// onChange={(e) => setEmail(e.target.value)} />
-// onChange={(e) => setAddress(e.target.value)} />
-// onChange={(e) => setTelNum(e.target.value)}
-// onChange={(e) => setMessage(e.target.value)}

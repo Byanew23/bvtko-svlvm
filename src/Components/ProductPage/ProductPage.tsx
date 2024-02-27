@@ -91,6 +91,12 @@ export const ProductPage = () => {
 
     const images = JSON.parse(window.localStorage[item?.id ?? ''] ?? '{}').urls
 
+    const handleRefreshOrderedItem = () => {
+        let currItem = JSON.parse(window.localStorage.getItem(productId ?? '') ?? '')
+        currItem.ordered = true
+        setItem(currItem)
+    }
+
 
     return item ? <div className="product-wrapper">
         <img className="product-image" src={images[currentPic]} alt={item.name} />
@@ -106,6 +112,6 @@ export const ProductPage = () => {
                 {item.ordered && <button className={`order-now ${isInWishlist && 'in-wishlist'}`} onClick={() => handleAddToWishlist(item, !isInWishlist)}>{isInWishlist ? "Remove From Wishlist" : "Add To Wishlist"}</button>}
             </span>
         </span>
-        {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} />} />}
+        {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} refreshItem={() => handleRefreshOrderedItem()} />} />}
     </div> : <div style={{ width: '100vw', height: '100vh' }}></div>
 }
