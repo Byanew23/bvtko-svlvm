@@ -104,12 +104,15 @@ export const ProductPage = () => {
 
             <div className="details">
                 <h2 className="name">{item.name}</h2>
-                <p className="price">{item.price}</p>
+                <p className="price">Price: {item.price} BGN</p>
                 <p>{item?.description}</p>
             </div>
             <span className='CTAs'>
                 <button className={`order-now${item.ordered ? "-sold" : ""}`} onClick={() => setOpenModal(true)}>{item.ordered ? "Sold Out" : "Order Now"}</button>
                 {item.ordered && <button className={`order-now ${isInWishlist && 'in-wishlist'}`} onClick={() => handleAddToWishlist(item, !isInWishlist)}>{isInWishlist ? "Remove From Wishlist" : "Add To Wishlist"}</button>}
+            </span>
+            <span >
+                <p className='disclaimer'>Disclaimer: This is an Art Piece and is not design to protect your eyes from the sun! </p>
             </span>
         </span>
         {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} refreshItem={() => handleRefreshOrderedItem()} />} />}
