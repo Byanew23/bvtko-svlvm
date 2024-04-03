@@ -9,7 +9,11 @@ export const LandingPage = () => {
     const [images, setImages] = React.useState<any[] | undefined>()
     if (!images) {
 
-        getItems().then(d => setImages(d))
+        getItems().then(d => {
+            d?.sort((a, b) => (a.ordered === b.ordered) ? 0 : a.ordered ? 1 : -1)
+            setImages(d)
+            console.log(d)
+        })
     } else {
         images.forEach(data => {
             if (!window.localStorage[data?.id as string]) {
