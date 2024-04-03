@@ -112,7 +112,7 @@ export const ProductPage = () => {
                 {item.ordered && <button className={`order-now ${isInWishlist && 'in-wishlist'}`} onClick={() => handleAddToWishlist(item, !isInWishlist)}>{isInWishlist ? "Remove From Wishlist" : "Add To Wishlist"}</button>}
             </span>
             <span >
-                <p className='disclaimer'>Disclaimer: This is an Art Piece and is not design to protect your eyes from the sun! </p>
+                <p className='disclaimer'>Disclaimer: This is an Art Piece and is not designed to protect your eyes from the sun! </p>
             </span>
         </span>
         {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} refreshItem={() => handleRefreshOrderedItem()} />} />}
