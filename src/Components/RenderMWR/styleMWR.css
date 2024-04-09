@@ -1,6 +1,6 @@
 #canvas3d {
-    width: 500px !important;
-    height: 500px;
+    width: 100% !important;
+    height: 100% !important;
     margin-left: 5rem;
-    /* background: red; */
+    background: transparent;
 }

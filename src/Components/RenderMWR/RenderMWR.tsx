@@ -8,8 +8,6 @@ export const RenderMWR = () => {
     React.useEffect(() => {
         const canvas = document.getElementById('canvas3d')
 
-        console.log(canvas)
-
         const spline = new Application(canvas as any)
         spline.load(splineLink)
     }, [])

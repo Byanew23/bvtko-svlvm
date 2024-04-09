@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import { LandingPage, ProductPage, AdminPage, Header, RenderMWR } from './Components';
+import { LandingPage, ProductPage, AdminPage, Header } from './Components';
 
 
 
@@ -14,7 +14,6 @@ function App() {
       <Routes>
         <Route path="/:productId" Component={ProductPage} />
         <Route path="/admin" Component={AdminPage} />
-        <Route path="/3d" Component={RenderMWR} />
         <Route path="/" Component={LandingPage} />
       </Routes>
     </Router>
