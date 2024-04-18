@@ -21,7 +21,7 @@ export const AdminPage = () => {
         }
     }, [])
 
-    const handleSubmit = (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => {
+    const handleSubmit = (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist' | 'is_album' | 'available_qty'>) => {
         // Handle form submission here, e.g., send data to your backend
         uploadItem(values)
     };

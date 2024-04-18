@@ -7,7 +7,7 @@ export const EditForm = ({ handleClose, item }: { handleClose: () => void, item:
     return (
         <Formik
 
-            initialValues={{ name: item.name, price: item.price, description: item.description, urls: item.urls, ordered: item.ordered }}
+            initialValues={{ name: item.name, price: item.price, description: item.description, urls: item.urls, ordered: item.ordered, is_album: item.is_album, available_qty: item.available_qty }}
             onSubmit={(values) => {
                 editItem(item.id, values)
                 handleClose()

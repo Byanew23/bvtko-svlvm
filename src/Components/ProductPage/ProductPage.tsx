@@ -93,10 +93,9 @@ export const ProductPage = () => {
 
     const handleRefreshOrderedItem = () => {
         let currItem = JSON.parse(window.localStorage.getItem(productId ?? '') ?? '')
-        currItem.ordered = true
+        if (!item?.is_album) currItem.ordered = true
         setItem(currItem)
     }
-
 
     return item ? <div className="product-wrapper">
         <img className="product-image" src={images[currentPic]} alt={item.name} />
@@ -111,9 +110,11 @@ export const ProductPage = () => {
                 <button className={`order-now${item.ordered ? "-sold" : ""}`} onClick={() => setOpenModal(true)}>{item.ordered ? "Sold Out" : "Order Now"}</button>
                 {item.ordered && <button className={`order-now ${isInWishlist && 'in-wishlist'}`} onClick={() => handleAddToWishlist(item, !isInWishlist)}>{isInWishlist ? "Remove From Wishlist" : "Add To Wishlist"}</button>}
             </span>
-            <span >
-                <p className='disclaimer'>Disclaimer: This is an Art Piece and is not designed to protect your eyes from the sun! </p>
-            </span>
+            {!item?.is_album &&
+                <span >
+                    <p className='disclaimer'>Disclaimer: This is an Art Piece and is not designed to protect your eyes from the sun! </p>
+                </span>
+            }
         </span>
         {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} component={<EmailForm handleClose={() => { setOpenModal(false); document.body.style.overflow = 'auto' }} refreshItem={() => handleRefreshOrderedItem()} />} />}
     </div> : <div style={{ width: '100vw', height: '100vh' }}></div>

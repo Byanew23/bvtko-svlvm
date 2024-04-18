@@ -1,7 +1,7 @@
 import React from 'react'
 import emailjs from '@emailjs/browser'
 import { useParams } from 'react-router-dom'
-import { setItemOrderStatus } from '../../hooks/useSupabaseData'
+import { setItemOrderStatus, orderAlbum as sendAlbumOrder } from '../../hooks/useSupabaseData'
 import './EmailForm.css'
 
 export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => void, refreshItem: () => void }) => {
@@ -11,9 +11,17 @@ export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => voi
 
 
     const { productId } = useParams()
-    const item = JSON.parse(window.localStorage.getItem(productId ?? '') ?? '').name
+    const item = JSON.parse(window.localStorage.getItem(productId ?? '') ?? '')
+    const itemName = item.name
     const markAsOrdered = () => {
         setItemOrderStatus(productId as string, true)
+    }
+    const orderAlbum = () => {
+        if (item.available_qty > 1) {
+            sendAlbumOrder(productId as string, item.available_qty)
+        } else {
+            setItemOrderStatus(productId as string, true)
+        }
     }
     const sendConfirmationEmail = () => {
         emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID as string, 'template_f1l8kb9', form.current, process.env.REACT_APP_EMAILJS_PUBLIC_KEY)
@@ -29,9 +37,13 @@ export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => voi
         emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID as string, 'template_prfqaua', form.current, process.env.REACT_APP_EMAILJS_PUBLIC_KEY)
             .then((result) => {
                 console.log(result.text);
+                if (item.is_album) {
+                    orderAlbum()
+                } else {
+                    markAsOrdered()
+                }
                 sendConfirmationEmail()
                 setEmailSent(true)
-                markAsOrdered()
                 refreshItem()
             }, (error) => {
                 console.log(error.text);
@@ -39,7 +51,7 @@ export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => voi
 
     }
     return <div className='form-wrapper'>{emailSent ? <div className="form-styler"><p>Thank you for your order! You should have received an email with your order details</p><button className="submit-button" onClick={handleClose}>Close</button></div> : <form ref={form} id="contactForm" className="form-styler" onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" id="name" name="glasses" className='hidden' defaultValue={item} />
+        <input type="text" id="name" name="glasses" className='hidden' defaultValue={itemName} />
 
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" name="to_name" required />

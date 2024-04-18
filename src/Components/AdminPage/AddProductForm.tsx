@@ -4,7 +4,7 @@ import { glassesDataType, OmitMultiple } from '../../utils';
 
 
 
-export const AddProductForm = ({ onSubmit }: { onSubmit: (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => void }) => {
+export const AddProductForm = ({ onSubmit }: { onSubmit: (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist' | 'is_album' | 'available_qty'>) => void }) => {
     return (
         <Formik
             initialValues={{ name: '', price: 0, description: '', urls: [], ordered: false }}

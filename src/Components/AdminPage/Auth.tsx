@@ -6,7 +6,6 @@ export const Auth = ({ changeTab }: { changeTab: () => void }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log(pass)
         if (pass === process.env.REACT_APP_ADMIN_PASS) {
             window.localStorage.setItem("Authenticated", "Batko ti vdmin")
             setFailed(false)

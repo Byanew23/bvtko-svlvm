@@ -14,7 +14,6 @@ export const getItems = async () => {
     if (error) {
         console.error('Error fetching data:', error.message);
     } else {
-        // console.log('Fetched data:', data);
         return data
     }
 
@@ -30,14 +29,13 @@ export const getItemById = async (id: string) => {
     if (error) {
         console.error('Error fetching data:', error.message);
     } else {
-        // console.log('Fetched data:', data);
         return data[0] as glassesDataType
     }
 
 
 };
 
-export const uploadItem = async (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => {
+export const uploadItem = async (values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist' | 'is_album' | 'available_qty'>) => {
 
     const { urls, name, description, price } = values
     const { data, error } = await supabase
@@ -70,7 +68,14 @@ export const setItemOrderStatus = async (id: string, status: boolean) => {
         .update({ 'ordered': status })
         .eq('id', id)
         .select()
+}
 
+export const orderAlbum = async (id: string, currentQty: number) => {
+    const { data, error } = await supabase
+        .from('items')
+        .update({ 'available_qty': currentQty - 1 })
+        .eq('id', id)
+        .select()
 }
 
 export const editItem = async (id: string, values: OmitMultiple<glassesDataType, 'id' | 'in_wishlist'>) => {
