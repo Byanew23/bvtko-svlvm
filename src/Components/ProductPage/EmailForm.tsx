@@ -6,6 +6,13 @@ import './EmailForm.css'
 
 export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => void, refreshItem: () => void }) => {
     const [emailSent, setEmailSent] = React.useState<boolean>(false)
+    const [selectedOption, setSelectedOption] = React.useState('Speedy');
+
+    // Handler function for radio button changes
+    const handleOptionChange = (event: any) => {
+        setSelectedOption(event.target.value);
+    };
+
 
     const form = React.useRef<any>()
 
@@ -59,7 +66,30 @@ export const EmailForm = ({ handleClose, refreshItem }: { handleClose: () => voi
         <label htmlFor="email">Email:</label>
         <input type="email" id="email" name="user_email" required />
 
-        <label htmlFor="address">Address:</label>
+        <label htmlFor="method">Method of delivery:</label>
+        <span className='delivery_method'>
+            <label>
+                <input
+                    type="radio"
+                    value="Speedy"
+                    checked={selectedOption === 'Speedy'}
+                    onChange={handleOptionChange}
+                />
+                Speedy
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Econt"
+                    checked={selectedOption === 'Econt'}
+                    onChange={handleOptionChange}
+                />
+                Econt
+            </label>
+        </span>
+        <input value={selectedOption} style={{ display: 'none' }} name="delivery_method" />
+
+        <label htmlFor="address">Office Name:</label>
         <input type="text" id="address" name="address" required />
 
         <label htmlFor="tel">Telephone Number:</label>
