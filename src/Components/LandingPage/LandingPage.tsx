@@ -10,6 +10,7 @@ export const LandingPage = () => {
     if (!images) {
 
         getItems().then(d => {
+            d?.sort((a, b) => b.id - a.id)
             d?.sort((a, b) => (a.ordered === b.ordered) ? 0 : a.ordered ? 1 : -1)
             d?.sort((a, b) => a.is_album ? -1 : 0)
             setImages(d)
@@ -23,6 +24,8 @@ export const LandingPage = () => {
             }
         })
     }
+
+    console.log(images)
 
     return <div className="wrapper">
         <div className='images-wrapper'>{images?.map(item => {
